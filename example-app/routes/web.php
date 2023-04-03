@@ -21,11 +21,10 @@ use function Ramsey\Uuid\v1;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/name/{name}', [Name::class, 'name']);
+Route::get('/name/{name}', [Name::class, 'name'])->where("name","[A-Z][a-z]{3,}");
 Route::get('/sum/{value1}/{value2}', [Operations::class, 'sum']);
 Route::get('/subtraction/{value1}/{value2}', [Operations::class, 'subtraction']);
 Route::get('/division/{value1}/{value2}', [Operations::class, 'division']);
 Route::get('/multiplication/{value1}/{value2}', [Operations::class, 'multiplication']);
 Route::get('/all/{value1}/{value2}', [Operations::class, 'all']);
-Route::get('/calculateYearSub/{day1}/{month1}/{year1}/{day2}/{month2}/{year2}', [Date::class, 'calculateYearSub']);
-Route::get('/calculateYearSum/{day1}/{month1}/{year1}/{day2}/{month2}/{year2}', [Date::class, 'calculateYearSum']);
+Route::get('/calculateYear/{year}/{month?}/{day?}', [Date::class, 'calculateYear']);

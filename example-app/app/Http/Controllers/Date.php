@@ -6,35 +6,48 @@ use Illuminate\Http\Request;
 
 class Date extends Controller
 {
-    public function calculateYearSub (int $day1, int $month1, int $year1, int $day2, int $month2, int $year2){
-        $d = $day1 - $day2;
-        $m = $month1 - $month2;
-        $y = $year1 - $year2;
-        if($d > 31){
-            "dia invalido";
+    //pode ser nulo --> null
+    public function calculateYear ($year, $month = null , $day = null){
+        $actualDate = new DateTime("now");
+        $birthDate = new DateTime($year.$month.$day);
+        $dateInterval = $birthDate->diff($actualDate);
+
+
+
+
+
+
+        //diff faz a diferença da data atual para a data na url
+
+
+
+
+        if($year > $actualDate->format('Y') || 
+            $year == $actualDate->format('Y')
+            && $month > $actualDate->format('m') || 
+            $year == $actualDate->format('Y') &&
+            $month == $actualDate->format('m') && 
+            $day > $actualDate->format('d')) {
+        echo "Não é possível calcular o intervalo de tempo em uma data futura";
         }
-        else if($m > 12){
-            "mês invalido";
-        }
-        else{ 
-            echo " $d/$m/$y";
-        }
+
+    elseif  
+    ($year == $actualDate->format('Y') 
+    && $month == $actualDate->format('m') 
+    && $day==$actualDate->format('d')) 
+    {
+        echo "A data sugerida indica o dia de hoje";
     }
-    public function calculateYearSum (int $day1, int $month1, int $year1, int $day2, int $month2, int $year2){
-        $d = $day1 + $day2;
-        $m = $month1 + $month2;
-        $y = $year1 + $year2;
-        if($d > 31){
-            "dia invalido";
-        }
-        else if($m > 12){
-            "mês invalido";
-        }
-        else if($y > 2023){
-            "ano invalido";
-        }
-        else{ 
-            echo " $d/$m/$y";
-        }
+    elseif ($day == null || $month == null)
+    {
+        echo "Nasceu no Ano de: {$year}";
+    }
+    else {
+        echo "Nasceu no dia:" ."$day/$month/$year";
+        echo  "$dateInterval->format('%y')}} anos";
+        echo  "$dateInterval->format('%m')}} meses"; 
+        echo  "$dateInterval->format('%d')}} dias";
+        echo "a data é $dateInterval";
+    }
     }
 }
